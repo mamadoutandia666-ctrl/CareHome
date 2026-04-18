@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareHome — Soins Infirmiers à Domicile | Dakar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a2540;--teal:#0d7377;--teal-light:#14a085;--teal-pale:#e6f4f4;--gold:#c8973a;--white:#ffffff;--off-white:#f8fafb;--gray-100:#f1f5f7;--gray-400:#94a3b8;--gray-600:#4a5568;--gray-800:#1a202c;--shadow:0 4px 24px rgba(10,37,64,.10);--shadow-lg:0 16px 48px rgba(10,37,64,.16);--radius:14px}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--gray-800);background:var(--white);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+.view{display:none;animation:fadeIn .4s ease}.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(13,115,119,.1);box-shadow:var(--shadow)}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--teal);text-decoration:none;cursor:pointer}
+.logo span{color:var(--gold)}
+.nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+.nav-links a{font-size:.88rem;font-weight:500;color:var(--gray-600);text-decoration:none;cursor:pointer;transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.nav-cta{background:var(--teal)!important;color:white!important;padding:.5rem 1.3rem;border-radius:100px;transition:background .2s!important}
+.nav-cta:hover{background:var(--teal-light)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:24px;height:2px;background:var(--navy);border-radius:2px}
+@media(max-width:800px){.nav-links{display:none;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:white;padding:1.5rem;gap:1rem;box-shadow:var(--shadow)}.nav-links.open{display:flex}.hamburger{display:flex}}
+#hero{min-height:100vh;background:var(--navy);display:flex;align-items:center;padding:70px 5% 0;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hb1{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(13,115,119,.15),transparent 70%);top:-100px;right:-100px;border-radius:50%}
+.hb2{position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(200,151,58,.08),transparent 70%);bottom:-50px;left:-50px;border-radius:50%}
+.grid-lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:50px 50px}
+.hero-content{position:relative;z-index:2;max-width:700px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(13,115,119,.2);border:1px solid rgba(13,115,119,.35);color:#5de0d8;padding:.4rem 1rem;border-radius:100px;font-size:.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-badge::before{content:'';width:7px;height:7px;background:#5de0d8;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-title{font-size:clamp(2.5rem,4.5vw,4rem);color:white;line-height:1.1;margin-bottom:1.5rem}
+.hero-title .hl{color:var(--gold);font-style:italic}
+.hero-desc{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:2.5rem;font-weight:300;max-width:560px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-main{background:var(--teal);color:white;padding:.9rem 2.2rem;border-radius:100px;font-size:.9rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:background .2s,transform .2s;box-shadow:0 4px 16px rgba(13,115,119,.4);display:inline-block}
+.btn-main:hover{background:var(--teal-light);transform:translateY(-2px)}
+.btn-sec{background:transparent;color:white;padding:.9rem 2.2rem;border-radius:100px;font-size:.9rem;font-weight:600;border:2px solid rgba(255,255,255,.25);cursor:pointer;transition:all .2s;display:inline-block}
+.btn-sec:hover{border-color:white;background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:3rem;margin-top:3.5rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,.1);flex-wrap:wrap}
+.hstat-val{font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--gold);font-weight:700}
+.hstat-label{font-size:.72rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-top:.2rem}
+.section{padding:5.5rem 5%}.section-bg{background:var(--off-white)}
+.stag{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--teal);margin-bottom:.7rem;display:block}
+.stitle{font-size:clamp(1.8rem,3vw,2.6rem);color:var(--navy);line-height:1.2;margin-bottom:.8rem}
+.sdesc{font-size:.95rem;color:var(--gray-600);line-height:1.75;max-width:580px}
+.sheader{margin-bottom:3rem}.sheader.c{text-align:center}.sheader.c .sdesc{margin:0 auto}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+@media(max-width:900px){.svc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:550px){.svc-grid{grid-template-columns:1fr}}
+.svc-card{background:white;border:1.5px solid var(--gray-100);border-radius:var(--radius);padding:1.8rem;cursor:pointer;position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s}
+.svc-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-light));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.svc-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--teal-pale)}
+.svc-card:hover::after{transform:scaleX(1)}
+.svc-icon{width:52px;height:52px;background:var(--teal-pale);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1rem}
+.svc-card h3{font-size:1rem;color:var(--navy);margin-bottom:.5rem;font-family:'DM Sans',sans-serif;font-weight:600}
+.svc-card p{font-size:.83rem;color:var(--gray-600);line-height:1.6;margin-bottom:1rem}
+.svc-arrow{display:inline-flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:600;color:var(--teal);transition:gap .2s}
+.svc-card:hover .svc-arrow{gap:.7rem}
+.detail-hero{background:var(--navy);padding:120px 5% 60px;position:relative;overflow:hidden}
+.detail-hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 80% 50%,rgba(13,115,119,.12),transparent)}
+.detail-back{display:inline-flex;align-items:center;gap:.5rem;color:rgba(255,255,255,.6);font-size:.83rem;font-weight:500;cursor:pointer;margin-bottom:1.5rem;transition:color .2s;position:relative;z-index:2;background:none;border:none;font-family:'DM Sans',sans-serif}
+.detail-back:hover{color:white}
+.detail-icon-big{width:70px;height:70px;background:rgba(13,115,119,.25);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:1.2rem;position:relative;z-index:2;border:1px solid rgba(13,115,119,.3)}
+.detail-hero h1{font-size:clamp(2rem,4vw,3.2rem);color:white;line-height:1.15;margin-bottom:1rem;position:relative;z-index:2}
+.detail-hero p{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.8;max-width:620px;font-weight:300;position:relative;z-index:2}
+.detail-body{padding:4rem 5%}
+.subtypes-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--teal);margin-bottom:1.5rem;display:block}
+.subtypes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:3rem}
+.subtype-card{background:white;border:1.5px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:all .25s;display:flex;gap:1rem;align-items:flex-start}
+.subtype-card:hover{border-color:var(--teal);box-shadow:0 4px 20px rgba(13,115,119,.12);transform:translateY(-3px)}
+.subtype-num{width:38px;height:38px;background:var(--teal-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.subtype-card h4{font-size:.95rem;color:var(--navy);font-family:'DM Sans',sans-serif;font-weight:600;margin-bottom:.3rem}
+.subtype-card p{font-size:.8rem;color:var(--gray-600);line-height:1.55}
+.detail-info-box{background:var(--teal-pale);border-radius:var(--radius);padding:2rem;border-left:4px solid var(--teal);margin-bottom:2rem}
+.detail-info-box h4{font-size:1rem;color:var(--navy);margin-bottom:.8rem;font-family:'DM Sans',sans-serif;font-weight:600}
+.detail-info-box ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.detail-info-box li{display:flex;align-items:center;gap:.6rem;font-size:.88rem;color:var(--gray-600)}
+.detail-info-box li::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+.cta-band{background:var(--navy);border-radius:var(--radius);padding:2.5rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-top:2rem}
+.cta-band h3{color:white;font-size:1.3rem}
+.cta-band p{color:rgba(255,255,255,.55);font-size:.85rem;margin-top:.3rem}
+.sub-hero{background:linear-gradient(135deg,var(--navy) 60%,#0d4d4f 200%);padding:120px 5% 50px;position:relative}
+.sub-hero h1{font-size:clamp(1.8rem,3.5vw,2.8rem);color:white;margin-bottom:.8rem;position:relative;z-index:2}
+.sub-hero p{color:rgba(255,255,255,.65);font-size:.95rem;line-height:1.8;max-width:580px;font-weight:300;position:relative;z-index:2}
+.sub-body{padding:3.5rem 5%}
+.info-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:2.5rem}
+.info-card{background:white;border:1px solid var(--gray-100);border-radius:var(--radius);padding:1.5rem}
+.info-card-icon{font-size:1.5rem;margin-bottom:.8rem}
+.info-card h4{font-size:.9rem;color:var(--navy);font-family:'DM Sans',sans-serif;font-weight:600;margin-bottom:.4rem}
+.info-card p{font-size:.82rem;color:var(--gray-600);line-height:1.6}
+.steps-list{display:flex;flex-direction:column;gap:0;border:1px solid var(--gray-100);border-radius:var(--radius);overflow:hidden;margin-bottom:2.5rem}
+.step-item{display:flex;gap:1.2rem;align-items:flex-start;padding:1.3rem 1.5rem;border-bottom:1px solid var(--gray-100);background:white}
+.step-item:last-child{border-bottom:none}
+.step-n{width:32px;height:32px;background:var(--teal);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.85rem;flex-shrink:0}
+.step-item p{font-size:.88rem;color:var(--gray-600);line-height:1.6;padding-top:.3rem}
+.alert-box{background:#fff8e6;border:1px solid #f0c060;border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;display:flex;gap:1rem}
+.alert-box span{font-size:1.3rem;flex-shrink:0}
+.alert-box p{font-size:.85rem;color:#7a5a00;line-height:1.65}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr}}
+.about-card{background:white;border-radius:20px;padding:2.5rem;box-shadow:var(--shadow-lg)}
+.about-card h3{font-size:1.3rem;color:var(--navy);margin-bottom:1rem}
+.about-card p{color:var(--gray-600);font-size:.9rem;line-height:1.8}
+.values{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}
+.val{display:flex;gap:.8rem;align-items:flex-start}
+.val-ico{width:40px;height:40px;background:var(--teal-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.val h4{font-size:.9rem;color:var(--navy);font-family:'DM Sans',sans-serif;font-weight:600;margin-bottom:.2rem}
+.val p{font-size:.82rem;color:var(--gray-600);line-height:1.5}
+.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:3.5rem;align-items:start}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr}}
+.cinfo{display:flex;flex-direction:column;gap:1rem}
+.ccard{background:white;border-radius:var(--radius);padding:1.3rem;display:flex;gap:.9rem;align-items:center;box-shadow:var(--shadow)}
+.ccard-ico{width:44px;height:44px;background:var(--teal-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.ccard-label{font-size:.72rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.ccard-val{font-size:.9rem;color:var(--navy);font-weight:600;margin-top:.15rem}
+.cform{background:white;border-radius:20px;padding:2.2rem;box-shadow:var(--shadow-lg)}
+.cform h3{font-size:1.3rem;color:var(--navy);margin-bottom:.3rem}
+.cform>p{color:var(--gray-600);font-size:.85rem;margin-bottom:1.5rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.fg{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem}
+.fg label{font-size:.72rem;font-weight:600;color:var(--navy);text-transform:uppercase;letter-spacing:.5px}
+.fg input,.fg select,.fg textarea{padding:.75rem .9rem;border:1.5px solid var(--gray-100);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--gray-800);background:var(--off-white);outline:none;transition:border-color .2s;resize:vertical}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal);background:white}
+.fg textarea{min-height:100px}
+.fsub{width:100%;background:var(--teal);color:white;padding:.9rem;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s,transform .2s}
+.fsub:hover{background:var(--teal-light);transform:translateY(-2px)}
+.success-msg{display:none;background:#e6f9f0;border:1px solid #27ae60;color:#1a7a42;padding:1rem;border-radius:10px;font-size:.88rem;text-align:center;margin-top:1rem}
+footer{background:var(--navy);padding:3rem 5% 2rem}
+.footer-top{display:flex;justify-content:space-between;align-items:center;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:white}
+.footer-logo span{color:var(--gold)}
+.footer-tagline{font-style:italic;font-size:.82rem;color:rgba(255,255,255,.4);margin-top:.3rem}
+.footer-links{display:flex;gap:1.8rem}
+.footer-links a{color:rgba(255,255,255,.5);font-size:.83rem;text-decoration:none;cursor:pointer;transition:color .2s}
+.footer-links a:hover{color:white}
+.footer-bottom{display:flex;justify-content:space-between;font-size:.78rem;color:rgba(255,255,255,.3);flex-wrap:wrap;gap:.5rem}
+</style>
+</head>
+<body>
+<nav id="navbar">
+  <div class="logo" onclick="go('home')">Care<span>Home</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="go('home');closeMenu()">Accueil</a></li>
+    <li><a onclick="goSection('about');closeMenu()">À propos</a></li>
+    <li><a onclick="goSection('services');closeMenu()">Nos Services</a></li>
+    <li><a onclick="goSection('contact');closeMenu()" class="nav-cta">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="ham" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="view active" id="view-home">
+  <section id="hero">
+    <div class="hero-bg"><div class="hb1"></div><div class="hb2"></div><div class="grid-lines"></div></div>
+    <div class="hero-content">
+      <div class="hero-badge">Soins Infirmiers à Domicile — Dakar, Sénégal</div>
+      <h1 class="hero-title">Des soins <span class="hl">professionnels</span><br>directement chez vous</h1>
+      <p class="hero-desc">CareHome est un réseau d'Infirmiers Diplômés d'État coordonné par <strong style="color:white">Mamadou Tandia</strong>. Nous assurons la continuité et la qualité de vos soins après hospitalisation ou consultation, 7 jours sur 7.</p>
+      <div class="hero-btns">
+        <button class="btn-main" onclick="goSection('services')">Voir nos services</button>
+        <button class="btn-sec" onclick="goSection('contact')">Nous contacter</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hstat-val">7j/7</div><div class="hstat-label">Disponible</div></div>
+        <div><div class="hstat-val">IDE</div><div class="hstat-label">Certifié</div></div>
+        <div><div class="hstat-val">Dakar</div><div class="hstat-label">Zone d'action</div></div>
+        <div><div class="hstat-val">100%</div><div class="hstat-label">Traçabilité</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="services">
+    <div class="sheader c">
+      <span class="stag">Ce que nous proposons</span>
+      <h2 class="stitle">Nos Services à Domicile</h2>
+      <p class="sdesc">Cliquez sur un service pour découvrir les détails et les types d'interventions disponibles.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card" onclick="goService('injections')"><div class="svc-icon">💉</div><h3>Injections & Perfusions</h3><p>Intraveineuses, intramusculaires, sous-cutanées et perfusions à domicile.</p><span class="svc-arrow">Voir les types →</span></div>
+      <div class="svc-card" onclick="goService('pansements')"><div class="svc-icon">🩹</div><h3>Pansements & Cicatrisation</h3><p>Soins de plaies, pansements complexes, escarres et cicatrisation guidée.</p><span class="svc-arrow">Voir les types →</span></div>
+      <div class="svc-card" onclick="goService('postop')"><div class="svc-icon">🏥</div><h3>Suivi Post-opératoire</h3><p>Surveillance après chirurgie, constantes vitales, prévention des complications.</p><span class="svc-arrow">Voir les types →</span></div>
+      <div class="svc-card" onclick="goService('chroniques')"><div class="svc-icon">❤️</div><h3>Maladies Chroniques</h3><p>Suivi diabète, hypertension, insuffisance cardiaque, éducation thérapeutique.</p><span class="svc-arrow">Voir les types →</span></div>
+      <div class="svc-card" onclick="goService('sondages')"><div class="svc-icon">🔬</div><h3>Sondages & Soins Spéciaux</h3><p>Sondages urinaires, trachéotomie, gavage entéral, aspiration.</p><span class="svc-arrow">Voir les types →</span></div>
+      <div class="svc-card" onclick="goService('accompagnement')"><div class="svc-icon">👨‍👩‍👧</div><h3>Accompagnement Famille</h3><p>Formation des aidants, accompagnement des personnes âgées, soutien familial.</p><span class="svc-arrow">Voir les types →</span></div>
+    </div>
+  </section>
+
+  <section class="section section-bg" id="about">
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Qui sommes-nous ?</h3>
+        <p>CareHome est un service de soins infirmiers à domicile coordonné par <strong>Mamadou Tandia</strong>, Infirmier Diplômé d'État, et son réseau d'infirmiers qualifiés. Notre mission : assurer la continuité des soins médicaux de qualité à Dakar et ses environs.</p>
+        <p style="margin-top:1rem;font-style:italic;color:var(--teal);font-size:.9rem;">"La santé n'a pas de frontières."</p>
+      </div>
+      <div>
+        <span class="stag">Nos valeurs</span>
+        <h2 class="stitle" style="margin-bottom:1.5rem;">Pourquoi choisir CareHome ?</h2>
+        <div class="values">
+          <div class="val"><div class="val-ico">🎓</div><div><h4>Expertise Certifiée</h4><p>Tous nos infirmiers sont titulaires du Diplôme d'État avec formation clinique rigoureuse.</p></div></div>
+          <div class="val"><div class="val-ico">📋</div><div><h4>Traçabilité Totale</h4><p>Rapport de suivi transmis à l'équipe médicale référente après chaque intervention.</p></div></div>
+          <div class="val"><div class="val-ico">🛡️</div><div><h4>Matériel Sécurisé</h4><p>Matériel stérile et à usage unique systématiquement utilisé lors de chaque visite.</p></div></div>
+          <div class="val"><div class="val-ico">⏱️</div><div><h4>Disponibilité 7j/7</h4><p>Présents y compris les week-ends et jours fériés pour toute situation urgente.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="sheader c">
+      <span class="stag">Contactez-nous</span>
+      <h2 class="stitle">Parlons de votre besoin</h2>
+      <p class="sdesc">Clinique partenaire, patient ou famille — nous vous répondons sous 24h.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="cinfo">
+        <div class="ccard"><div class="ccard-ico">👤</div><div><div class="ccard-label">Coordinateur</div><div class="ccard-val">Mamadou Tandia, IDE</div></div></div>
+        <div class="ccard"><div class="ccard-ico">📞</div><div><div class="ccard-label">Téléphone</div><div class="ccard-val">+221 70 368 71 20</div></div></div>
+        <div class="ccard"><div class="ccard-ico">📧</div><div><div class="ccard-label">Email</div><div class="ccard-val">mt4315177@gmail.com</div></div></div>
+        <div class="ccard"><div class="ccard-ico">📍</div><div><div class="ccard-label">Zone</div><div class="ccard-val">Dakar et environs</div></div></div>
+        <div class="ccard"><div class="ccard-ico">🕐</div><div><div class="ccard-label">Disponibilité</div><div class="ccard-val">7 jours sur 7</div></div></div>
+      </div>
+      <div class="cform">
+        <h3>Envoyer un message</h3>
+        <p>Décrivez votre besoin et nous vous répondons rapidement.</p>
+        <div class="frow">
+          <div class="fg"><label>Prénom</label><input type="text" id="f1" placeholder="Votre prénom"></div>
+          <div class="fg"><label>Nom</label><input type="text" id="f2" placeholder="Votre nom"></div>
+        </div>
+        <div class="fg"><label>Contact (tél. ou email)</label><input type="text" id="f3" placeholder="+221... ou email@..."></div>
+        <div class="fg"><label>Vous êtes</label><select id="f4"><option value="">— Choisir —</option><option>Une clinique / cabinet médical</option><option>Un patient</option><option>Un proche / famille</option><option>Autre</option></select></div>
+        <div class="fg"><label>Message</label><textarea id="f5" placeholder="Décrivez votre besoin..."></textarea></div>
+        <button class="fsub" onclick="sendForm()">Envoyer le message</button>
+        <div class="success-msg" id="smsg">✅ Message envoyé ! Mamadou vous contactera très prochainement.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="view" id="view-service">
+  <div class="detail-hero">
+    <div class="detail-hero-bg"></div>
+    <button class="detail-back" onclick="go('home');setTimeout(()=>goSection('services'),100)">← Retour aux services</button>
+    <div class="detail-icon-big" id="d-icon">💉</div>
+    <h1 id="d-title"></h1>
+    <p id="d-desc"></p>
+  </div>
+  <div class="detail-body">
+    <span class="subtypes-title">Choisissez le type d'intervention</span>
+    <div class="subtypes-grid" id="d-subtypes"></div>
+    <div class="detail-info-box">
+      <h4>Notre engagement pour ce service</h4>
+      <ul>
+        <li>Matériel médical stérile et à usage unique</li>
+        <li>Infirmier Diplômé d'État certifié</li>
+        <li>Rapport de suivi transmis après chaque intervention</li>
+        <li>Disponibilité 7 jours sur 7 à Dakar</li>
+      </ul>
+    </div>
+    <div class="cta-band">
+      <div><h3>Besoin de ce service ?</h3><p>Contactez-nous pour prendre rendez-vous dès aujourd'hui.</p></div>
+      <button class="btn-main" onclick="go('home');setTimeout(()=>goSection('contact'),100)">Prendre contact</button>
+    </div>
+  </div>
+</div>
+
+<div class="view" id="view-subtype">
+  <div class="sub-hero">
+    <button class="detail-back" id="sub-back">← Retour</button>
+    <div class="detail-icon-big" id="sub-icon"></div>
+    <h1 id="sub-title"></h1>
+    <p id="sub-desc"></p>
+  </div>
+  <div class="sub-body">
+    <div class="info-cards" id="sub-cards"></div>
+    <span class="subtypes-title">Comment se déroule l'intervention</span>
+    <div class="steps-list" id="sub-steps"></div>
+    <div class="alert-box"><span>⚠️</span><p id="sub-alert-text"></p></div>
+    <div class="cta-band">
+      <div><h3>Prendre rendez-vous</h3><p>+221 70 368 71 20 · mt4315177@gmail.com</p></div>
+      <button class="btn-main" onclick="go('home');setTimeout(()=>goSection('contact'),100)">Nous contacter</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-top">
+    <div><div class="footer-logo">Care<span>Home</span></div><div class="footer-tagline">Parce que la santé n'a pas de frontières.</div></div>
+    <nav class="footer-links">
+      <a onclick="goSection('about')">À propos</a>
+      <a onclick="goSection('services')">Services</a>
+      <a onclick="goSection('contact')">Contact</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 CareHome — Mamadou Tandia, IDE</span>
+    <span>+221 70 368 71 20 · mt4315177@gmail.com · Dakar, Sénégal</span>
+  </div>
+</footer>
+
+<script>
+const SERVICES={injections:{icon:'💉',title:'Injections & Perfusions',desc:"Réalisées par un Infirmier Diplômé d'État avec matériel stérile à usage unique. Chaque injection est effectuée dans le strict respect des règles d'asepsie et des protocoles médicaux.",subtypes:[{icon:'🩸',title:'Injection Intramusculaire (IM)',desc:"Administrée dans le muscle. Utilisée pour les antibiotiques, anti-inflammatoires, vitamines.",cards:[{icon:'📍',h:"Site d'injection",p:"Muscle deltoïde, fessier ou vaste externe selon le produit et le patient."},{icon:'⏱️',h:'Durée',p:"5 à 10 minutes sur place, incluant la préparation et l'observation."},{icon:'📋',h:'Matériel',p:"Seringue stérile à usage unique, aiguille adaptée, antiseptique."}],steps:["Vérification de l'ordonnance et du produit à injecter","Lavage des mains et préparation du matériel stérile","Désinfection du site d'injection","Administration du produit selon le protocole","Surveillance de 5 min et rapport transmis au médecin"],alert:"Signaler toute allergie connue avant l'intervention. En cas de réaction (rougeur, gonflement, fièvre), contacter immédiatement CareHome."},{icon:'🔵',title:'Injection Intraveineuse (IV)',desc:"Administrée directement dans une veine. Permet une action rapide du médicament.",cards:[{icon:'💊',h:'Indications',p:"Antibiotiques IV, antalgiques, antiémétiques, traitements urgents prescrits par le médecin."},{icon:'⏱️',h:'Durée',p:"10 à 20 minutes selon le médicament et la tolérance du patient."},{icon:'⚕️',h:'Surveillance',p:"Constantes surveillées pendant et après l'injection."}],steps:["Vérification de l'ordonnance et compatibilité du produit","Pose du garrot et repérage de la veine","Désinfection cutanée minutieuse","Ponction et administration lente du produit","Retrait de l'aiguille, compression et observation"],alert:"L'injection IV nécessite une ordonnance médicale valide. Le patient doit signaler toute douleur, brûlure ou malaise pendant l'acte."},{icon:'🟡',title:'Injection Sous-cutanée (SC)',desc:"Administrée sous la peau. Utilisée notamment pour l'insuline et les anticoagulants.",cards:[{icon:'📍',h:'Site',p:"Ventre, bras, cuisses — rotation des sites obligatoire pour éviter les lipodystrophies."},{icon:'💉',h:'Produits courants',p:"Insuline, héparine de bas poids moléculaire (HBPM), hormones."},{icon:'🔄',h:'Fréquence',p:"Peut être quotidienne voire pluriquotidienne selon le traitement prescrit."}],steps:["Préparation du produit selon la dose prescrite","Formation du pli cutané","Insertion de l'aiguille à 45°","Injection lente puis retrait","Notation dans le carnet de suivi"],alert:"Pour les patients diabétiques, la rotation des sites d'injection est essentielle pour éviter la lipoatrophie. CareHome assure un suivi et une traçabilité complète."},{icon:'💧',title:'Perfusion à Domicile',desc:"Administration d'un liquide médicamenteux ou d'hydratation par voie veineuse sur une durée prolongée.",cards:[{icon:'🏠',h:'À domicile',p:"Installation complète du matériel de perfusion avec surveillance pendant toute la durée."},{icon:'⏳',h:'Durée',p:"De 30 minutes à plusieurs heures selon le traitement prescrit."},{icon:'📡',h:'Suivi',p:"Surveillance des constantes tout au long de la perfusion."}],steps:["Vérification de l'ordonnance et préparation du soluté","Pose de la voie veineuse périphérique","Réglage du débit selon prescription","Surveillance continue (constantes, site de perfusion)","Retrait et rapport médical transmis"],alert:"Toute rougeur, douleur ou gonflement au site de perfusion doit être signalé immédiatement. L'infirmier reste disponible pendant toute la durée du traitement."}}],pansements:{icon:'🩹',title:'Pansements & Cicatrisation',desc:"Soins de plaies réalisés selon les dernières recommandations médicales. CareHome assure un suivi rigoureux de l'évolution de la cicatrisation avec rapport transmis au médecin référent.",subtypes:[{icon:'🩹',title:'Pansement Simple',desc:"Pour les plaies superficielles, coupures, abrasions et petites brûlures.",cards:[{icon:'🧴',h:'Produits',p:"Nettoyage avec sérum physiologique, antiseptique adapté, pansement stérile."},{icon:'⏱️',h:'Fréquence',p:"Tous les 1 à 3 jours selon la plaie et les recommandations médicales."},{icon:'📋',h:'Suivi',p:"Photo et description de l'état de la plaie transmis au médecin."}],steps:["Lavage des mains et préparation du matériel","Ablation de l'ancien pansement","Nettoyage de la plaie au sérum physiologique","Application de l'antiseptique si prescrit","Pose du nouveau pansement stérile"],alert:"Si la plaie présente des signes d'infection (chaleur, pus, odeur, fièvre), contacter immédiatement le médecin traitant."},{icon:'🔴',title:'Pansement Complexe',desc:"Pour les plaies profondes, chirurgicales, chroniques nécessitant une technique spécialisée.",cards:[{icon:'⚕️',h:'Indications',p:"Post-chirurgicaux, plaies diabétiques, ulcères, plaies nécrotiques."},{icon:'🧪',h:'Technique',p:"Détersion mécanique, irrigation, utilisation de pansements actifs spécialisés."},{icon:'📊',h:'Évaluation',p:"Score de cicatrisation évalué à chaque soin avec rapport détaillé."}],steps:["Évaluation de la plaie (taille, profondeur, aspect)","Irrigation et nettoyage minutieux","Détersion si nécessaire","Application du pansement adapté (hydrocolloïde, alginates...)","Documentation photographique et rapport médical"],alert:"Les pansements complexes requièrent une ordonnance médicale. CareHome travaille en coordination étroite avec le médecin traitant."},{icon:'🛏️',title:"Soins d'Escarres",desc:"Prévention et traitement des escarres chez les patients alités ou à mobilité réduite.",cards:[{icon:'🔄',h:'Prévention',p:"Changements de position, protections cutanées, surveillance des points d'appui."},{icon:'📏',h:'Stades',p:"Prise en charge adaptée selon le stade de l'escarre (1 à 4)."},{icon:'👨‍👩‍👧',h:'Formation',p:"Formation des aidants aux techniques de prévention et de soin."}],steps:["Évaluation du stade et de l'étendue de l'escarre","Nettoyage délicat de la zone","Application du traitement prescrit","Mise en place des dispositifs de prévention","Conseils aux aidants et rapport au médecin"],alert:"La prévention est essentielle. CareHome forme les familles aux bons gestes pour réduire le risque d'aggravation entre les visites."}]},postop:{icon:'🏥',title:'Suivi Post-opératoire',desc:"Surveillance médicale rigoureuse après une intervention chirurgicale, assurée à votre domicile par un infirmier diplômé en coordination avec votre chirurgien.",subtypes:[{icon:'📊',title:'Surveillance des Constantes',desc:"Contrôle régulier des signes vitaux après une opération.",cards:[{icon:'❤️',h:'Paramètres',p:"Tension artérielle, pouls, température, saturation en oxygène, fréquence respiratoire."},{icon:'📅',h:'Fréquence',p:"Quotidienne ou biquotidienne selon les recommandations du chirurgien."},{icon:'📡',h:'Transmissions',p:"Résultats transmis immédiatement au médecin en cas d'anomalie."}],steps:["Prise des constantes vitales complètes","Évaluation de la douleur (échelle EVA)","Vérification du site opératoire","Contrôle du traitement post-opératoire","Rapport transmis au chirurgien"],alert:"Tout signe d'alerte (fièvre > 38,5°C, douleur intense, saignement) déclenche un appel immédiat au chirurgien et si nécessaire aux urgences."},{icon:'💊',title:'Gestion du Traitement Post-op',desc:"Administration et surveillance du traitement médicamenteux prescrit après l'opération.",cards:[{icon:'💉',h:'Antalgiques',p:"Administration d'antalgiques IV ou IM selon l'ordonnance pour le contrôle de la douleur."},{icon:'🩸',h:'Anticoagulants',p:"Injections d'héparine pour prévenir les thromboses post-opératoires."},{icon:'💊',h:'Antibiotiques',p:"Administration d'antibiotiques préventifs ou curatifs selon prescription."}],steps:["Vérification de l'ordonnance et des allergies","Préparation du médicament","Administration selon le protocole","Surveillance de la tolérance","Notation dans le carnet de suivi"],alert:"Ne jamais modifier les doses ou arrêter un traitement post-opératoire sans avis médical. CareHome assure le suivi strict de l'ordonnance."},{icon:'🚶',title:'Rééducation Précoce',desc:"Accompagnement aux premiers gestes de mobilisation après une chirurgie.",cards:[{icon:'🤸',h:'Mobilisation',p:"Aide aux premiers levers, exercices respiratoires, prévention des complications."},{icon:'👁️',h:'Surveillance',p:"Observation de la tolérance à l'effort et détection des complications."},{icon:'📚',h:'Éducation',p:"Conseils pratiques pour une récupération optimale à domicile."}],steps:["Évaluation de la capacité de mobilisation","Aide au premier lever supervisé","Exercices respiratoires post-opératoires","Conseils de positionnement et prévention","Rapport d'évolution transmis au chirurgien"],alert:"La rééducation post-opératoire précoce est essentielle pour prévenir les complications. Chaque patient progresse à son propre rythme sous surveillance infirmière."}]},chroniques:{icon:'❤️',title:'Maladies Chroniques',desc:"Suivi régulier et éducation thérapeutique pour les patients atteints de maladies chroniques. CareHome accompagne les patients et leurs familles dans la gestion quotidienne.",subtypes:[{icon:'🩸',title:'Suivi Diabète',desc:"Accompagnement complet des patients diabétiques de type 1 et 2.",cards:[{icon:'📊',h:'Glycémie',p:"Contrôle de la glycémie capillaire, surveillance et ajustement selon protocole."},{icon:'💉',h:'Insuline',p:"Aide à l'injection d'insuline et formation à l'auto-injection pour les patients."},{icon:'👁️',h:'Complications',p:"Surveillance des pieds diabétiques, des plaies et signes de complications."}],steps:["Contrôle de la glycémie capillaire","Évaluation des zones d'injection","Administration de l'insuline si nécessaire","Vérification des pieds (plaies, déformations)","Éducation thérapeutique et rapport au diabétologue"],alert:"Pour les patients diabétiques, la régularité des soins est cruciale. En cas d'hypoglycémie (< 0,7 g/L) ou hyperglycémie sévère, contacter immédiatement le médecin."},{icon:'💗',title:'Suivi Hypertension',desc:"Surveillance tensionnelle régulière et accompagnement des patients hypertendus.",cards:[{icon:'🩺',h:'Mesures',p:"Prise de tension artérielle selon les protocoles, aux deux bras si nécessaire."},{icon:'💊',h:'Traitement',p:"Vérification de la prise régulière du traitement antihypertenseur."},{icon:'📈',h:'Courbe',p:"Tenue d'un carnet tensionnel et transmission au cardiologue."}],steps:["Prise de tension après 5 min de repos","Mesure aux deux bras","Contrôle du pouls et de la fréquence cardiaque","Vérification du traitement en cours","Notation et transmission des valeurs au médecin"],alert:"Une tension > 180/110 mmHg constitue une urgence hypertensive. CareHome alerte immédiatement le médecin et si nécessaire oriente vers les urgences."},{icon:'🫀',title:'Insuffisance Cardiaque',desc:"Suivi rapproché des patients insuffisants cardiaques à domicile.",cards:[{icon:'⚖️',h:'Poids',p:"Pesée quotidienne — une prise de poids de 2 kg en 2 jours alerte sur une décompensation."},{icon:'🫁',h:'Dyspnée',p:"Évaluation de l'essoufflement au repos et à l'effort, signes d'œdèmes."},{icon:'💊',h:'Diurétiques',p:"Surveillance de l'efficacité des diurétiques et de l'équilibre hydrique."}],steps:["Pesée et comparaison au poids de référence","Écoute des poumons (auscultation)","Contrôle des œdèmes des membres inférieurs","Surveillance de la tension et du pouls","Rapport immédiat au cardiologue si anomalie"],alert:"Toute prise de poids soudaine, aggravation de l'essoufflement ou apparition d'œdèmes importants nécessite une consultation médicale urgente."}]},sondages:{icon:'🔬',title:'Sondages & Soins Spéciaux',desc:"Actes techniques spécialisés réalisés dans le strict respect des règles d'asepsie et des protocoles médicaux, par des infirmiers expérimentés.",subtypes:[{icon:'🚿',title:'Sondage Urinaire',desc:"Pose et surveillance d'une sonde vésicale ou sondage évacuateur.",cards:[{icon:'⚕️',h:'Indications',p:"Rétention urinaire, surveillance de la diurèse, post-opératoire, pathologies neurologiques."},{icon:'🧪',h:'Asepsie',p:"Protocole strict d'asepsie pour prévenir les infections urinaires."},{icon:'📊',h:'Surveillance',p:"Surveillance de la diurèse, aspect et couleur des urines, signes d'infection."}],steps:["Préparation du matériel stérile","Toilette périnéale antiseptique","Introduction de la sonde selon le protocole","Gonflage du ballonnet et fixation","Connexion au système collecteur et surveillance"],alert:"La prévention des infections urinaires associées aux soins (IUAS) est primordiale. Le soin est réalisé en asepsie stricte avec du matériel stérile à usage unique."},{icon:'🌬️',title:'Soins de Trachéotomie',desc:"Nettoyage et surveillance de la canule de trachéotomie.",cards:[{icon:'🧼',h:'Nettoyage',p:"Nettoyage de la canule intérieure et des téguments péristomaux."},{icon:'👁️',h:'Surveillance',p:"Contrôle de la perméabilité des voies aériennes et détection de complications."},{icon:'🫁',h:'Aspiration',p:"Aspiration trachéo-bronchique si nécessaire selon l'état du patient."}],steps:["Préparation du matériel stérile","Aspiration trachéale si sécrétions","Ablation et nettoyage de la canule interne","Nettoyage de la stomie","Remise en place et surveillance de la ventilation"],alert:"Les soins de trachéotomie requièrent une formation spécifique. CareHome dispose d'infirmiers formés à ces soins complexes avec matériel d'urgence disponible."},{icon:'🍼',title:'Gavage Entéral',desc:"Administration de nutrition par sonde naso-gastrique ou gastrostomie.",cards:[{icon:'🥗',h:'Nutrition',p:"Administration de la nutrition entérale prescrite par le médecin selon le débit préconisé."},{icon:'✅',h:'Vérification',p:"Contrôle du positionnement de la sonde avant chaque administration."},{icon:'💧',h:'Hydratation',p:"Rinçage de la sonde avant et après chaque administration."}],steps:["Vérification du positionnement de la sonde","Contrôle de la tolérance digestive","Préparation de la nutrition selon la prescription","Administration au débit prescrit","Rinçage et surveillance après le gavage"],alert:"En cas de résidu gastrique important, nausées ou vomissements, le gavage est suspendu et le médecin contacté immédiatement."}]},accompagnement:{icon:'👨‍👩‍👧',title:'Accompagnement & Famille',desc:"CareHome ne soigne pas seulement les patients — nous accompagnons aussi leurs familles avec formation, soutien et conseils pour une prise en charge optimale au quotidien.",subtypes:[{icon:'📚',title:'Formation des Aidants',desc:"Apprendre aux proches les gestes essentiels pour prendre soin de leur parent.",cards:[{icon:'🤲',h:'Gestes de base',p:"Hygiène, aide au déplacement, prévention des escarres, administration des médicaments."},{icon:'👁️',h:'Surveillance',p:"Reconnaître les signes d'alerte et savoir quand appeler un professionnel."},{icon:'📞',h:'Soutien',p:"CareHome reste joignable pour répondre aux questions des aidants entre les visites."}],steps:["Évaluation des besoins de la famille","Démonstration des gestes de soins","Pratique supervisée par l'infirmier","Remise d'une fiche pratique personnalisée","Suivi et correction lors des visites suivantes"],alert:"Être aidant est épuisant. N'hésitez pas à nous contacter si vous ressentez de la fatigue ou de l'inquiétude — nous sommes là pour vous soutenir."},{icon:'👴',title:'Prise en Charge Personnes Âgées',desc:"Soins et accompagnement adaptés aux personnes âgées dépendantes ou semi-dépendantes.",cards:[{icon:'🛁',h:'Hygiène',p:"Aide à la toilette complète ou partielle, soins de bouche, soins cutanés."},{icon:'💊',h:'Médicaments',p:"Préparation et vérification de la prise du traitement quotidien."},{icon:'🍽️',h:'Nutrition',p:"Évaluation nutritionnelle, aide à l'alimentation si nécessaire."}],steps:["Évaluation globale de l'autonomie","Soins d'hygiène et confort","Administration des traitements prescrits","Stimulation et maintien des capacités","Rapport à la famille et aux médecins"],alert:"La bientraitance est au cœur de notre approche. Chaque personne âgée est traitée avec respect, dignité et bienveillance lors de chaque visite."},{icon:'💬',title:'Éducation Thérapeutique',desc:"Former les patients à mieux comprendre et gérer leur maladie au quotidien.",cards:[{icon:'📖',h:'Compréhension',p:"Explication de la maladie, des traitements et des objectifs thérapeutiques."},{icon:'🎯',h:'Objectifs',p:"Définition d'objectifs personnalisés avec le patient et le médecin."},{icon:'📊',h:'Évaluation',p:"Évaluation régulière des acquis et adaptation du programme."}],steps:["Évaluation des connaissances initiales du patient","Élaboration d'un programme personnalisé","Sessions d'éducation thérapeutique","Évaluation des acquis et ajustements","Transmission du bilan au médecin référent"],alert:"L'éducation thérapeutique améliore significativement la qualité de vie et l'adhérence au traitement. C'est un investissement pour la santé à long terme."}]}};
+
+function go(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById('view-'+v).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+function goSection(id){go('home');setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},80)}
+function goService(key){const svc=SERVICES[key];document.getElementById('d-icon').textContent=svc.icon;document.getElementById('d-title').textContent=svc.title;document.getElementById('d-desc').textContent=svc.desc;const grid=document.getElementById('d-subtypes');grid.innerHTML='';svc.subtypes.forEach((st,i)=>{const c=document.createElement('div');c.className='subtype-card';c.innerHTML=`<div class="subtype-num">${st.icon}</div><div><h4>${st.title}</h4><p>${st.desc}</p></div>`;c.onclick=()=>goSubtype(key,i);grid.appendChild(c)});go('service')}
+function goSubtype(sk,idx){const st=SERVICES[sk].subtypes[idx];document.getElementById('sub-icon').textContent=st.icon;document.getElementById('sub-title').textContent=st.title;document.getElementById('sub-desc').textContent=st.desc;document.getElementById('sub-back').onclick=()=>goService(sk);const cards=document.getElementById('sub-cards');cards.innerHTML='';st.cards.forEach(c=>{cards.innerHTML+=`<div class="info-card"><div class="info-card-icon">${c.icon}</div><h4>${c.h}</h4><p>${c.p}</p></div>`});const steps=document.getElementById('sub-steps');steps.innerHTML='';st.steps.forEach((s,i)=>{steps.innerHTML+=`<div class="step-item"><div class="step-n">${i+1}</div><p>${s}</p></div>`});document.getElementById('sub-alert-text').textContent=st.alert;go('subtype')}
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
+function closeMenu(){document.getElementById('navLinks').classList.remove('open')}
+function sendForm(){const f=document.getElementById('f1').value.trim(),c=document.getElementById('f3').value.trim();if(!f||!c){alert('Merci de renseigner votre prénom et votre contact.');return}document.getElementById('smsg').style.display='block';const b=document.querySelector('.fsub');b.disabled=true;b.textContent='Envoyé ✓';b.style.background='#27ae60'}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}})},{threshold:.08});
+document.querySelectorAll('.svc-card,.val,.ccard').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(20px)';el.style.transition='opacity .5s ease,transform .5s ease';obs.observe(el)});
+</script>
+</body>
+</html>
