@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareHome — Soins Infirmiers à Domicile | Dakar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a2540;
+    --teal: #0d7377;
+    --teal-light: #14a085;
+    --teal-pale: #e6f4f4;
+    --gold: #c8973a;
+    --white: #ffffff;
+    --off-white: #f8fafb;
+    --gray-100: #f1f5f7;
+    --gray-400: #94a3b8;
+    --gray-600: #4a5568;
+    --gray-800: #1a202c;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(10,37,64,0.10);
+    --shadow-lg: 0 16px 48px rgba(10,37,64,0.16);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray-800);
+    background: var(--white);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 72px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(13,115,119,0.12);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow); }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: -0.5px;
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+    align-items: center;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--gray-600);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: var(--teal);
+    transform: scaleX(0); transition: transform 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  .nav-cta {
+    background: var(--teal);
+    color: white !important;
+    padding: 0.5rem 1.4rem;
+    border-radius: 100px;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--teal-light) !important; transform: translateY(-1px); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--navy); border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ── PAGES ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+    padding-top: 72px;
+  }
+
+  .hero-bg-circles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .circle {
+    position: absolute; border-radius: 50%;
+    opacity: 0.07;
+  }
+  .c1 { width: 600px; height: 600px; background: var(--teal); top: -200px; right: -150px; }
+  .c2 { width: 400px; height: 400px; background: var(--gold); bottom: -100px; left: -100px; }
+  .c3 { width: 200px; height: 200px; background: white; top: 40%; left: 30%; }
+
+  .hero-content {
+    flex: 1; display: flex; align-items: center;
+    padding: 5% 5% 3%;
+    gap: 5rem;
+  }
+
+  .hero-text { flex: 1; max-width: 600px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(13,115,119,0.25);
+    color: #5de0d8;
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(13,115,119,0.4);
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: #5de0d8;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .hero-title {
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-title .highlight { color: var(--gold); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 16px rgba(13,115,119,0.4);
+  }
+  .btn-primary:hover {
+    background: var(--teal-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(13,115,119,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: white;
+    padding: 0.85rem 2rem;
+    border-radius: 100px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.3);
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  }
+  .btn-outline:hover {
+    border-color: white;
+    background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+
+  .hero-visual {
+    flex: 0 0 380px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(16px);
+  }
+
+  .hero-card-title {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-pill {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: var(--radius);
+    margin-bottom: 0.6rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.2s;
+    cursor: default;
+  }
+  .service-pill:hover { background: rgba(255,255,255,0.1); }
+
+  .pill-icon {
+    width: 36px; height: 36px;
+    background: rgba(13,115,119,0.3);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .pill-text { color: white; font-size: 0.88rem; font-weight: 500; }
+
+  .hero-stats {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 0;
+    background: rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 1.5rem; border-radius: 0 0 16px 16px;
+    overflow: hidden;
+  }
+
+  .stat-item {
+    padding: 1.2rem 0.8rem; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-val { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700; }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); margin-top: 0.2rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 5%; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--teal);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+    color: var(--gray-600);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  .section-header { margin-bottom: 3.5rem; }
+  .section-header.centered { text-align: center; }
+  .section-header.centered .section-subtitle { margin: 0 auto; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--off-white); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card-main {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-card-main h3 {
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .about-card-main p {
+    color: var(--gray-600);
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+
+  .about-card-float {
+    position: absolute;
+    bottom: -1.5rem; right: -1.5rem;
+    background: var(--teal);
+    color: white;
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(13,115,119,0.35);
+    z-index: 2;
+  }
+
+  .float-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .float-label { font-size: 0.8rem; opacity: 0.8; margin-top: 0.3rem; }
+
+  .about-accent-dot {
+    position: absolute;
+    top: -1rem; left: -1rem;
+    width: 80px; height: 80px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0.15;
+    z-index: 0;
+  }
+
+  .about-text .section-subtitle { max-width: 100%; margin-bottom: 2rem; }
+
+  .values-list { display: flex; flex-direction: column; gap: 1rem; }
+
+  .value-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+
+  .value-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: var(--teal-pale);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .value-text h4 { font-size: 1rem; color: var(--navy); margin-bottom: 0.2rem; font-family: 'DM Sans', sans-serif; font-weight: 600; }
+  .value-text p { font-size: 0.88rem; color: var(--gray-600); line-height: 1.5; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--white); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--gray-100);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-light));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--teal-pale);
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-icon-wrap {
+    width: 56px; height: 56px;
+    background: var(--teal-pale);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+  }
+
+  .service-card p {
+    font-size: 0.88rem;
+    color: var(--gray-600);
+    line-height: 1.65;
+  }
+
+  /* ── PARTENARIAT ── */
+  #partenariat { background: var(--navy); }
+
+  #partenariat .section-title { color: white; }
+  #partenariat .section-subtitle { color: rgba(255,255,255,0.6); }
+  #partenariat .section-tag { color: #5de0d8; }
+
+  .partner-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .partner-steps { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .step {
+    display: flex; gap: 1.2rem;
+    padding: 1.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    transition: background 0.2s;
+  }
+  .step:hover { background: rgba(255,255,255,0.08); }
+
+  .step-num {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--teal);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  .step h4 { color: white; font-size: 0.95rem; font-weight: 600; font-family: 'DM Sans', sans-serif; margin-bottom: 0.3rem; }
+  .step p { color: rgba(255,255,255,0.55); font-size: 0.85rem; line-height: 1.55; }
+
+  .partner-cta-box {
+    background: rgba(13,115,119,0.15);
+    border: 1px solid rgba(13,115,119,0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: sticky; top: 100px;
+  }
+
+  .partner-cta-box h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .partner-cta-box p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .benefits-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+
+  .benefit {
+    display: flex; align-items: center; gap: 0.6rem;
+    color: rgba(255,255,255,0.8); font-size: 0.88rem;
+  }
+  .benefit::before {
+    content: '✓';
+    width: 20px; height: 20px;
+    background: rgba(13,115,119,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    color: #5de0d8;
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--off-white); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-info { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .contact-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 1.4rem;
+    display: flex; gap: 1rem; align-items: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s;
+  }
+  .contact-card:hover { transform: translateX(4px); }
+
+  .contact-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: var(--teal-pale);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .contact-label { font-size: 0.78rem; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .contact-value { font-size: 0.95rem; color: var(--navy); font-weight: 600; margin-top: 0.2rem; }
+
+  .contact-form-box {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .contact-form-box h3 {
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-form-box > p {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+
+  .form-group label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 0.8rem 1rem;
+    border: 1.5px solid var(--gray-100);
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--gray-800);
+    background: var(--off-white);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(13,115,119,0.1);
+    background: white;
+  }
+
+  .form-group textarea { min-height: 110px; }
+
+  .form-submit {
+    width: 100%;
+    background: var(--teal);
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .form-submit:hover {
+    background: var(--teal-light);
+    transform: translateY(-2px);
+  }
+
+  .success-msg {
+    display: none;
+    background: #e6f9f0;
+    border: 1px solid #27ae60;
+    color: #1a7a42;
+    padding: 1rem;
+    border-radius: var(--radius);
+    font-size: 0.92rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy);
+    padding: 3rem 5% 2rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: white;
+  }
+  .footer-brand span { color: var(--gold); }
+
+  .footer-tagline {
+    font-style: italic;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
+  }
+
+  .footer-nav { display: flex; gap: 2rem; }
+  .footer-nav a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.88rem;
+    transition: color 0.2s;
+  }
+  .footer-nav a:hover { color: white; }
+
+  .footer-bottom {
+    display: flex; justify-content: space-between;
+    font-size: 0.82rem;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .hero-content { flex-direction: column; gap: 2.5rem; padding: 3rem 5%; }
+    .hero-visual { flex: none; width: 100%; }
+    .about-grid, .partner-grid, .contact-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .about-card-float { position: static; margin-top: 1rem; }
+    .footer-top { flex-direction: column; align-items: flex-start; }
+    .nav-links { display: none; flex-direction: column; position: fixed; top: 72px; left: 0; right: 0; background: white; padding: 1.5rem; gap: 1rem; box-shadow: var(--shadow); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: repeat(3,1fr); }
+    section { padding: 4rem 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a class="nav-logo" href="#" onclick="showPage('home')">Care<span>Home</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" onclick="showPage('home'); scrollTo('hero')">Accueil</a></li>
+    <li><a href="#" onclick="showPage('home'); scrollTo('about')">À propos</a></li>
+    <li><a href="#" onclick="showPage('home'); scrollTo('services')">Services</a></li>
+    <li><a href="#" onclick="showPage('home'); scrollTo('partenariat')">Partenariat</a></li>
+    <li><a href="#" onclick="showPage('home'); scrollTo('contact')" class="nav-cta">Nous contacter</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- PAGE: HOME -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-circles">
+      <div class="circle c1"></div>
+      <div class="circle c2"></div>
+      <div class="circle c3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">Soins Infirmiers à Domicile — Dakar</div>
+        <h1 class="hero-title">
+          Des soins <span class="highlight">professionnels</span><br>
+          directement chez vous
+        </h1>
+        <p class="hero-desc">
+          CareHome est un réseau d'Infirmiers Diplômés d'État coordonné par
+          <strong style="color:white">Mamadou Tandia</strong>, qui assure la continuité
+          et la qualité de vos soins médicaux après hospitalisation ou consultation,
+          7 jours sur 7 à Dakar.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary" onclick="showPage('home'); scrollTo('contact')">Prendre contact</a>
+          <a href="#" class="btn-outline" onclick="showPage('home'); scrollTo('services')">Nos services</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-title">Nos interventions à domicile</div>
+          <div class="service-pill"><div class="pill-icon">💉</div><span class="pill-text">Injections & Perfusions</span></div>
+          <div class="service-pill"><div class="pill-icon">🩹</div><span class="pill-text">Pansements & Cicatrisation</span></div>
+          <div class="service-pill"><div class="pill-icon">❤️</div><span class="pill-text">Suivi Maladies Chroniques</span></div>
+          <div class="service-pill"><div class="pill-icon">🏥</div><span class="pill-text">Post-opératoire à domicile</span></div>
+          <div class="service-pill"><div class="pill-icon">📋</div><span class="pill-text">Rapport transmis après chaque soin</span></div>
+          <div class="hero-stats">
+            <div class="stat-item"><div class="stat-val">7j/7</div><div class="stat-label">Disponible</div></div>
+            <div class="stat-item"><div class="stat-val">IDE</div><div class="stat-label">Certifié</div></div>
+            <div class="stat-item"><div class="stat-val">Dakar</div><div class="stat-label">Zone d'action</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-accent-dot"></div>
+        <div class="about-card-main">
+          <h3>Notre Histoire</h3>
+          <p>
+            CareHome est né d'un constat simple : après une hospitalisation ou une consultation,
+            beaucoup de patients sénégalais manquent de suivi médical de qualité à domicile.
+            Mamadou Tandia, Infirmier Diplômé d'État, a réuni un réseau de professionnels
+            de santé qualifiés pour pallier cette lacune.
+          </p>
+          <br>
+          <p>
+            Notre mission est d'assurer la continuité des soins avec rigueur, bienveillance
+            et transparence — en partenariat direct avec les cliniques et cabinets médicaux de Dakar.
+          </p>
+        </div>
+        <div class="about-card-float">
+          <div class="float-val">IDE</div>
+          <div class="float-label">Infirmier Diplômé d'État</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-header">
+          <span class="section-tag">À propos</span>
+          <h2 class="section-title">Pourquoi choisir CareHome ?</h2>
+          <p class="section-subtitle">
+            Un service humain, certifié et disponible quand vous en avez le plus besoin.
+          </p>
+        </div>
+        <div class="values-list">
+          <div class="value-item">
+            <div class="value-icon">🎓</div>
+            <div class="value-text">
+              <h4>Expertise Certifiée</h4>
+              <p>Tous nos infirmiers sont titulaires du Diplôme d'État, avec une formation clinique rigoureuse.</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🤝</div>
+            <div class="value-text">
+              <h4>Partenariat avec les Cliniques</h4>
+              <p>Nous travaillons en lien direct avec les structures médicales pour une prise en charge globale.</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">📄</div>
+            <div class="value-text">
+              <h4>Traçabilité Complète</h4>
+              <p>Un rapport de suivi est transmis à l'équipe médicale référente après chaque intervention.</p>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🛡️</div>
+            <div class="value-text">
+              <h4>Matériel Sécurisé</h4>
+              <p>Utilisation systématique de matériel stérile et à usage unique lors de chaque visite.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header centered">
+      <span class="section-tag">Ce que nous faisons</span>
+      <h2 class="section-title">Nos Services à Domicile</h2>
+      <p class="section-subtitle">
+        Du soin technique au suivi quotidien, CareHome intervient pour chaque besoin médical à votre domicile.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon-wrap">💉</div>
+        <h3>Injections & Perfusions</h3>
+        <p>Injections intraveineuses, intramusculaires, sous-cutanées. Perfusions à domicile réalisées avec matériel stérile.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">🩹</div>
+        <h3>Pansements & Cicatrisation</h3>
+        <p>Soins de plaies, pansements simples et complexes, surveillance et traitement des escarres.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">🏥</div>
+        <h3>Suivi Post-opératoire</h3>
+        <p>Surveillance après une opération : contrôle des constantes, gestion de la douleur, prévention des complications.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">❤️</div>
+        <h3>Maladies Chroniques</h3>
+        <p>Suivi régulier des patients diabétiques, hypertendus et insuffisants cardiaques. Éducation thérapeutique.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">🔬</div>
+        <h3>Sondages & Soins Spéciaux</h3>
+        <p>Sondages urinaires, soins de trachéotomie, gavage, aspiration. Réalisés dans les règles d'asepsie.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon-wrap">👨‍👩‍👧</div>
+        <h3>Accompagnement Famille</h3>
+        <p>Formation des aidants, éducation thérapeutique des proches, accompagnement des personnes âgées.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PARTENARIAT -->
+  <section id="partenariat">
+    <div class="partner-grid">
+      <div>
+        <div class="section-header">
+          <span class="section-tag">Pour les Cliniques</span>
+          <h2 class="section-title">Un partenariat simple et efficace</h2>
+          <p class="section-subtitle">
+            CareHome prend en charge le suivi à domicile de vos patients dès leur sortie de clinique, avec un retour d'information régulier à votre équipe.
+          </p>
+        </div>
+        <div class="partner-steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <h4>Vous nous signalez un patient</h4>
+              <p>Après hospitalisation ou consultation, transmettez-nous les informations médicales nécessaires.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <h4>Nous intervenons à domicile</h4>
+              <p>Un infirmier diplômé se rend chez le patient selon le planning défini, avec tout le matériel requis.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <h4>Rapport transmis à votre équipe</h4>
+              <p>Après chaque intervention, nous vous envoyons un compte-rendu détaillé pour assurer la continuité des soins.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <h4>Disponibilité 7j/7</h4>
+              <p>Joignable y compris le week-end et les jours fériés pour toute situation urgente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="partner-cta-box">
+          <h3>Commençons à collaborer</h3>
+          <p>CareHome est disponible pour toute clinique ou cabinet médical privé de Dakar souhaitant assurer un suivi à domicile de qualité pour ses patients.</p>
+          <div class="benefits-list">
+            <div class="benefit">Prise en charge rapide dès la sortie de clinique</div>
+            <div class="benefit">Rapport de suivi après chaque visite</div>
+            <div class="benefit">Infirmiers Diplômés d'État certifiés</div>
+            <div class="benefit">Tarification claire et adaptée</div>
+            <div class="benefit">Disponibilité 7 jours sur 7</div>
+            <div class="benefit">Matériel médical stérile à usage unique</div>
+          </div>
+          <a href="#" class="btn-primary" onclick="showPage('home'); scrollTo('contact')" style="display:block; text-align:center;">
+            Contacter CareHome
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header centered">
+      <span class="section-tag">Contact</span>
+      <h2 class="section-title">Parlons de votre besoin</h2>
+      <p class="section-subtitle">
+        Que vous soyez une clinique partenaire ou un patient, nous vous répondons rapidement.
+      </p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-icon">👤</div>
+          <div>
+            <div class="contact-label">Coordinateur</div>
+            <div class="contact-value">Mamadou Tandia, IDE</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Téléphone</div>
+            <div class="contact-value">+221 70 368 71 20</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📧</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">mt4315177@gmail.com</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Zone d'intervention</div>
+            <div class="contact-value">Dakar et environs</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Disponibilité</div>
+            <div class="contact-value">7 jours sur 7</div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-box">
+        <h3>Envoyer un message</h3>
+        <p>Clinique partenaire, patient ou famille — décrivez votre besoin et nous vous répondons sous 24h.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prénom</label>
+            <input type="text" id="fname" placeholder="Votre prénom">
+          </div>
+          <div class="form-group">
+            <label>Nom</label>
+            <input type="text" id="lname" placeholder="Votre nom">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email ou Téléphone</label>
+          <input type="text" id="contact_val" placeholder="email@exemple.com ou +221...">
+        </div>
+        <div class="form-group">
+          <label>Vous êtes</label>
+          <select id="type">
+            <option value="">-- Choisir --</option>
+            <option>Une clinique / cabinet médical</option>
+            <option>Un patient</option>
+            <option>Un proche / famille</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="message" placeholder="Décrivez votre besoin ou votre question..."></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Envoyer le message</button>
+        <div class="success-msg" id="successMsg">
+          ✅ Message envoyé ! Mamadou vous contactera dans les plus brefs délais.
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end page-home -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">Care<span>Home</span></div>
+      <div class="footer-tagline">Parce que la santé n'a pas de frontières.</div>
+    </div>
+    <nav class="footer-nav">
+      <a href="#" onclick="scrollTo('about')">À propos</a>
+      <a href="#" onclick="scrollTo('services')">Services</a>
+      <a href="#" onclick="scrollTo('partenariat')">Partenariat</a>
+      <a href="#" onclick="scrollTo('contact')">Contact</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 CareHome — Mamadou Tandia, IDE</span>
+    <span>+221 70 368 71 20 · mt4315177@gmail.com · Dakar, Sénégal</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Page navigation
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('navLinks').classList.remove('open');
+  }
+
+  // Scroll to section
+  function scrollTo(id) {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+    return false;
+  }
+
+  // Form submit
+  function submitForm() {
+    const fname = document.getElementById('fname').value.trim();
+    const contact_val = document.getElementById('contact_val').value.trim();
+    if (!fname || !contact_val) {
+      alert('Merci de renseigner au minimum votre prénom et votre contact.');
+      return;
+    }
+    document.getElementById('successMsg').style.display = 'block';
+    document.querySelector('.form-submit').disabled = true;
+    document.querySelector('.form-submit').textContent = 'Message envoyé ✓';
+    document.querySelector('.form-submit').style.background = '#27ae60';
+  }
+
+  // Scroll animation for cards
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .step, .value-item, .contact-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
